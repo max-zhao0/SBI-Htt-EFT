@@ -1,16 +1,16 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName     = 'VBF_Htt_SMEFTsim_topU3l_quadratic_noMS_gennanogen_200kevents'
+config.General.requestName     = 'VBF_Htt_SMEFTsim_topU3l_quadratic_unpolarized_gen_200kevents'
 config.General.workArea        = 'crab_jobs'
 config.General.transferOutputs = True
 config.General.transferLogs    = True
 
 config.JobType.pluginName = 'PrivateMC'
-config.JobType.psetName = 'VBF_Htt_SMEFTsim_topU3l_quadratic_gennanogen_cfg.py'
+config.JobType.psetName = 'VBF_Htt_SMEFTsim_topU3l_quadratic_gen_cfg.py'
 config.JobType.allowUndistributedCMSSW = True
 config.JobType.maxMemoryMB = 3000
-config.JobType.maxJobRuntimeMin = 120
+config.JobType.maxJobRuntimeMin = 300
 config.JobType.numCores = 1
 # config.JobType.inputFiles = [
 #     '/eos/user/z/zhaom/htautau/samples/SBI-Htt-EFT/genproductions_mg35x_gh/bin/MadGraph5_aMCatNLO/VBF_Htt_SMEFTsim_topU3l_quadratic_noMS_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'

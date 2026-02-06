@@ -150,7 +150,7 @@ class DiobjectProcessor(processor.ProcessorABC):
         histograms["norw_{}_mass".format(self.name)] = h_mass
         histograms["norw_{}_dR".format(self.name)] = h_dR
         histograms["norw_{}_pt".format(self.name)] = h_pt
-        histograms["norw_{}_pt".format(self.name)]
+        histograms["norw_{}_absdeltaphi".format(self.name)] = h_absdeltaphi
 
         for rw_name in weight_sets:
             h_mass_rw = hist.Hist.new.Reg(
@@ -289,7 +289,8 @@ class PhiCPProcessor(processor.ProcessorABC):
         pvis_neg_rf = ak.where(cand2_is_pos, pvis1_rf, pvis2_rf)
 
         npos = ptau_pos_rf.cross(pvis_pos_rf).unit()
-        nneg = ptau_neg_rf.cross(pvis_neg_rf).unit()
+        # nneg = ptau_neg_rf.cross(pvis_neg_rf).unit()
+        nneg = pvis_neg_rf.cross(ptau_neg_rf).unit()
 
         ptau_pos_norm = ptau_pos_rf.unit()
         num = nneg.cross(ptau_pos_norm).dot(npos)
@@ -515,6 +516,6 @@ if __name__ == "__main__":
     parser.add_argument("infile")
     parser.add_argument("outfile")
     parser.add_argument("-w", "--reweights")
-    parser.add_argument("-h", "--histtypes", default="single,diobject,phicp,lhetau,weight")
+    parser.add_argument("-t", "--histtypes", default="single,diobject,phicp,lhetau,weight")
     parser.add_argument("-d", "--decaymodes", default="all")
     print("\nFinished with exit code:", main(parser.parse_args()))

@@ -12,3 +12,17 @@ CMSSW_*
 */crab.log
 */crab_jobs
 */*.root
+
+test_quadratic
+*.txt
+*.venv*
+mg_cache
+genproductions*
+*.tar.gz
+.vscode
+*.json
+*.png
+*.py.swp
+python/histograms
+python/data
+python/tmp

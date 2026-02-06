@@ -6,21 +6,36 @@ import mplhep as hep
 import numpy as np
 
 def modify_label(label):
-    label = label.replace("-", " ")
     label = label.replace("norw", "")
     label = label.replace("noms", "")
     label = label.replace("eft", "")
     label = label.replace("stride5", "")
-    
-    label = label.replace(" 0p0 ", "=0p0,")
-    label = label.replace(" 10p0", "=10p0")
-    label = label.replace("p0", "")
+    label = label.replace("-", " ")
 
-    return label.strip()
+    if "central" in label:
+        return label.strip()
+
+    words = label.strip().split()
+    new_words = []
+
+    for iw, w in enumerate(words):
+        val = w.replace("m", "-").replace("p", ".")
+        try:
+            num = float(val)
+        except ValueError:
+            continue
+
+        if num != 0:
+            new_words.append(words[iw-1] + "={:.1f}".format(num))
+
+    if not new_words:
+        return "SM"
+
+    return ",".join(new_words)
 
 def main(argv):
-    # python plot_comparison.py histograms/central_VBF_hists.root,norw histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0 histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_10p0
-    # python plot_comparison.py histograms/central_VBF_hists_stride5.root,norw histograms/eft_noms_hists_stride5.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0 histograms/eft_noms_hists_stride5.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_10p0
+    # python plot_comparison.py histograms/central_VBF_hists.root,norw histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0_chl3_0p0 histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_10p0_chl3_0p0
+    # python plot_comparison.py histograms/central_VBF_hists_stride5.root,norw histograms/eft_noms_hists_stride5.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0_chl3_0p0 histograms/eft_noms_hists_stride5.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_10p0_chl3_0p0
     # python plot_comparison.py histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0
     # python plot_comparison.py histograms/eft_noms_hists.root,cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_10p0
     histograms = {}
@@ -73,6 +88,7 @@ def main(argv):
             ax.set_ylim(0.1592 - 0.03, 0.1592 + 0.03)
         if "LHEtau_spin" in name:
             ax.set_xticks([0, 1, 2, 3], ["++", "+-", "-+", "--"])
+            ax.set_yscale("log")
 
         label = name.replace("_", " ")
 

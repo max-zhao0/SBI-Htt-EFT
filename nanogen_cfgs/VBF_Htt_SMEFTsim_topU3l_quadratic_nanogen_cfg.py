@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/GenProduction/python/nomerge_tauola_fragment.py --python_filename VBF_Htt_SMEFTsim_topU3l_quadratic_gennanogen_cfg.py --eventcontent NANOAODGEN --datatier NANOAOD --conditions 130X_mcRun3_2023_realistic_postBPix_v5 --beamspot Realistic25ns13p6TeVEarly2023Collision --step LHE,GEN,NANOGEN --geometry DB:Extended --era Run3_2023 --customise Configuration/DataProcessing/Utils.addMonitoring --fileout file:gen.root --no_exec --mc -n 10000
+# with command line options: Configuration/Generator/python/nomerge_tauola_fragment.py --python_filename foo.py --eventcontent NANOAOD --datatier NANOAOD --conditions 130X_mcRun3_2023_realistic_postBPix_v5 --beamspot Realistic25ns13p6TeVEarly2023Collision --step NONE --geometry DB:Extended --era Run3_2023 --customise Configuration/DataProcessing/Utils.addMonitoring --fileout file:nanogen.root --no_exec --mc
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_2023_cff import Run3_2023
@@ -15,28 +15,31 @@ process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
-process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
-process.load('Configuration.StandardSequences.MagneticField_cff')
-process.load('Configuration.StandardSequences.Generator_cff')
-process.load('IOMC.EventVertexGenerators.VtxSmearedRealistic25ns13p6TeVEarly2023Collision_cfi')
-process.load('GeneratorInterface.Core.genFilterSummary_cff')
+process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('PhysicsTools.NanoAOD.nanogen_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+# process.load('PhysicsTools.PatAlgos.slimming.genParticles_cff')
+process.load("PhysicsTools.PatAlgos.slimming.prunedGenParticles_cfi")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10000),
+    input = cms.untracked.int32(200),
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
 # Input source
-process.source = cms.Source("EmptySource")
+import os
+
+input_path = '/eos/user/z/zhaom/qqHtoTauTau/130X_mcRun3_2023_realistic_postBPix_v5/GEN_unpolarized_v1/0000/'
+process.source = cms.Source("PoolSource",
+    # fileNames = cms.untracked.vstring(['file:' + input_path + fname for fname in os.listdir(input_path) if fname.endswith(".root")]),
+    fileNames = cms.untracked.vstring("file:/eos/user/z/zhaom/qqHtoTauTau/130X_mcRun3_2023_realistic_postBPix_v5/GEN_unpolarized_v1/0000/gen_1.root"),
+    secondaryFileNames = cms.untracked.vstring()
+)
 
 process.options = cms.untracked.PSet(
-    FailPath = cms.untracked.vstring(),
     IgnoreCompletely = cms.untracked.vstring(),
     Rethrow = cms.untracked.vstring(),
-    SkipEvent = cms.untracked.vstring(),
+    TryToContinue = cms.untracked.vstring(),
     accelerators = cms.untracked.vstring('*'),
     allowUnscheduled = cms.obsolete.untracked.bool,
     canDeleteEarly = cms.untracked.vstring(),
@@ -53,6 +56,7 @@ process.options = cms.untracked.PSet(
     forceEventSetupCacheClearOnNewRun = cms.untracked.bool(False),
     holdsReferencesToDeleteEarly = cms.untracked.VPSet(),
     makeTriggerResults = cms.obsolete.untracked.bool,
+    modulesToCallForTryToContinue = cms.untracked.vstring(),
     modulesToIgnoreForDeleteEarly = cms.untracked.vstring(),
     numberOfConcurrentLuminosityBlocks = cms.untracked.uint32(0),
     numberOfConcurrentRuns = cms.untracked.uint32(1),
@@ -66,140 +70,75 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/GenProduction/python/nomerge_tauola_fragment.py nevts:10000'),
+    annotation = cms.untracked.string('Configuration/Generator/python/nomerge_tauola_fragment.py nevts:1'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
 
 # Output definition
 
-process.NANOAODGENoutput = cms.OutputModule("NanoAODOutputModule",
-    SelectEvents = cms.untracked.PSet(
-        SelectEvents = cms.vstring('generation_step')
-    ),
+process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
     compressionLevel = cms.untracked.int32(9),
     dataset = cms.untracked.PSet(
         dataTier = cms.untracked.string('NANOAOD'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('file:gen.root'),
-    outputCommands = process.NANOAODGENEventContent.outputCommands
+    fileName = cms.untracked.string('file:nanogen.root'),
+    outputCommands = process.NANOAODEventContent.outputCommands
 )
 
 # Additional output definition
 
 # Other statements
-process.genstepfilter.triggerConditions=cms.vstring("generation_step")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '130X_mcRun3_2023_realistic_postBPix_v5', '')
 
-process.generator = cms.EDFilter("Pythia8HadronizerFilter",
-    ExternalDecays = cms.PSet(
-        Tauola = cms.untracked.PSet(
-            InputCards = cms.PSet(
-                mdtau = cms.int32(0),
-                pjak1 = cms.int32(0),
-                pjak2 = cms.int32(0)
-            ),
-            UseTauolaPolarization = cms.bool(False)
-        ),
-        parameterSets = cms.vstring('Tauola')
-    ),
-    PythiaParameters = cms.PSet(
-        parameterSets = cms.vstring(
-            'pythia8CommonSettings',
-            'pythia8CP5Settings',
-            'processParameters'
-        ),
-        processParameters = cms.vstring('JetMatching:merge = off'),
-        pythia8CP5Settings = cms.vstring(
-            'Tune:pp 14',
-            'Tune:ee 7',
-            'MultipartonInteractions:ecmPow=0.03344',
-            'MultipartonInteractions:bProfile=2',
-            'MultipartonInteractions:pT0Ref=1.41',
-            'MultipartonInteractions:coreRadius=0.7634',
-            'MultipartonInteractions:coreFraction=0.63',
-            'ColourReconnection:range=5.176',
-            'SigmaTotal:zeroAXB=off',
-            'SpaceShower:alphaSorder=2',
-            'SpaceShower:alphaSvalue=0.118',
-            'SigmaProcess:alphaSvalue=0.118',
-            'SigmaProcess:alphaSorder=2',
-            'MultipartonInteractions:alphaSvalue=0.118',
-            'MultipartonInteractions:alphaSorder=2',
-            'TimeShower:alphaSorder=2',
-            'TimeShower:alphaSvalue=0.118',
-            'SigmaTotal:mode = 0',
-            'SigmaTotal:sigmaEl = 21.89',
-            'SigmaTotal:sigmaTot = 100.309',
-            'PDF:pSet=LHAPDF6:NNPDF31_nnlo_as_0118'
-        ),
-        pythia8CommonSettings = cms.vstring(
-            'Tune:preferLHAPDF = 2',
-            'Main:timesAllowErrors = 10000',
-            'Check:epTolErr = 0.01',
-            'Beams:setProductionScalesFromLHEF = off',
-            'SLHA:minMassSM = 1000.',
-            'ParticleDecays:limitTau0 = on',
-            'ParticleDecays:tau0Max = 10',
-            'ParticleDecays:allowPhotonRadiation = on'
-        )
-    ),
-    UseExternalGenerators = cms.untracked.bool(True),
-    comEnergy = cms.double(13600.0),
-    filterEfficiency = cms.untracked.double(1.0),
-    maxEventsToPrint = cms.untracked.int32(1),
-    pythiaHepMCVerbosity = cms.untracked.bool(False),
-    pythiaPylistVerbosity = cms.untracked.int32(1)
+# prunedGenParticles
+process.prunedGenParticles.src = "genParticles"
+process.genParticleSequence = cms.Sequence(process.prunedGenParticles)
+process.nanogenSequence = cms.Sequence(process.genParticleSequence + process.nanogenSequence)
+
+# TauSpinner
+from PhysicsTools.NanoAOD.tauSpinnerTableProducer_cfi import tauSpinnerTableProducer
+process.tauSpinnerTable = tauSpinnerTableProducer.clone(
+    src = "prunedGenParticles",
+    name = "TauSpinner",
+    theta = [0, 0.25, 0.5, -0.25, 0.375],
+    defaultWeight = 1
+)
+process.nanogenSequence += process.tauSpinnerTable
+process.NANOAODoutput.outputCommands.append(
+    "keep *_tauSpinnerTable_TauSpinner_*"
 )
 
-
-process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_noMS_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
-    #args = cms.vstring('/eos/user/z/zhaom/htautau/samples/SBI-Htt-EFT/genproductions_mg35x_gh/bin/MadGraph5_aMCatNLO/VBF_Htt_SMEFTsim_topU3l_quadratic_noMS_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
-    nEvents = cms.untracked.uint32(10000),
-    numberOfParameters = cms.uint32(1),
-    outputFile = cms.string('cmsgrid_final.lhe'),
-    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh')
-)
-
+process.dump = cms.EDAnalyzer("EventContentAnalyzer")
+process.dumpPath = cms.Path(process.dump)
 
 # Path and EndPath definitions
-process.lhe_step = cms.Path(process.externalLHEProducer)
-process.generation_step = cms.Path(process.pgen)
 process.nanoAOD_step = cms.Path(process.nanogenSequence)
-process.genfiltersummary_step = cms.EndPath(process.genFilterSummary)
 process.endjob_step = cms.EndPath(process.endOfProcess)
-process.NANOAODGENoutput_step = cms.EndPath(process.NANOAODGENoutput)
+process.NANOAODGENoutput_step = cms.EndPath(process.NANOAODoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.lhe_step,process.generation_step,process.genfiltersummary_step,process.nanoAOD_step,process.endjob_step,process.NANOAODGENoutput_step)
+process.schedule = cms.Schedule(
+    process.nanoAOD_step,
+    process.endjob_step,
+    process.NANOAODGENoutput_step
+)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 
-#Setup FWK for multithreaded
-process.options.numberOfConcurrentLuminosityBlocks = 1
-process.options.eventSetup.numberOfConcurrentIOVs = 1
-# filter all path with the production filter sequence
-for path in process.paths:
-	if path in ['lhe_step']: continue
-	getattr(process,path).insert(0, process.generator)
-
 # customisation of the process.
-
-# Automatic addition of the customisation function from PhysicsTools.NanoAOD.nanogen_cff
-from PhysicsTools.NanoAOD.nanogen_cff import customizeNanoGEN 
-
-#call to customisation function customizeNanoGEN imported from PhysicsTools.NanoAOD.nanogen_cff
-process = customizeNanoGEN(process)
 
 # Automatic addition of the customisation function from Configuration.DataProcessing.Utils
 from Configuration.DataProcessing.Utils import addMonitoring 
 
 #call to customisation function addMonitoring imported from Configuration.DataProcessing.Utils
 process = addMonitoring(process)
+
+from PhysicsTools.NanoAOD.nanogen_cff import customizeNanoGEN 
+process = customizeNanoGEN(process)
 
 # End of customisation functions
 
