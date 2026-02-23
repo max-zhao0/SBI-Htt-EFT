@@ -1,6 +1,7 @@
-
+import argparse
 import os
 import json
+from typing import Callable
 from concurrent.futures import ThreadPoolExecutor
 
 import awkward as ak
@@ -310,12 +311,15 @@ def main(args):
         infiles = {inpath : "Events"}
     elif inpath.endswith("/"):
         infiles = {inpath + fname : "Events" for fname in os.listdir(inpath) if fname.endswith(".root")}
+        print("Opening:")
+        for p in infiles:
+            print(p)
     else:
         raise ValueError("inpath should end with .root or /")
     fileset = {
         "signal": {
             "files": infiles,
-            "metadata": {"year": 2023, "is_mc": True},
+            "metadata": {"year": 2024, "is_mc": True},
         }
     }
 
@@ -330,7 +334,7 @@ def main(args):
     runner = processor.Runner(
         executor=processor.FuturesExecutor(workers=8), # , pool=ThreadPoolExecutor
         schema=NanoAODSchema,
-        chunksize=5_000
+        chunksize=500
     )
     
     processors_to_run = []
@@ -411,6 +415,7 @@ def main(args):
 if __name__ == "__main__":
     # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/130X_mcRun3_2023_realistic_postBPix_v5/unpolarized_v0/0000/ data/eft_unpolarized.root
     # python ntuplize_nanogen.py data/eft_tauspinner_nanogen.root data/eft_tauspinner_ntuples.root
+    # python ntuplize_nanogen.py /data/nanoaodsim_mid.root /data/ntuples_mid.root
     parser = argparse.ArgumentParser()
     parser.add_argument("inpath")
     parser.add_argument("outfile")
