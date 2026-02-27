@@ -334,7 +334,7 @@ def main(args):
     runner = processor.Runner(
         executor=processor.FuturesExecutor(workers=8), # , pool=ThreadPoolExecutor
         schema=NanoAODSchema,
-        chunksize=500
+        chunksize=5000
     )
     
     processors_to_run = []
@@ -413,7 +413,7 @@ def main(args):
     return 0
 
 if __name__ == "__main__":
-    # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/130X_mcRun3_2023_realistic_postBPix_v5/unpolarized_v0/0000/ data/eft_unpolarized.root
+    # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_v1/0000/ data/eft_unpolarized.root
     # python ntuplize_nanogen.py data/eft_tauspinner_nanogen.root data/eft_tauspinner_ntuples.root
     # python ntuplize_nanogen.py /data/nanoaodsim_mid.root /data/ntuples_mid.root
     parser = argparse.ArgumentParser()

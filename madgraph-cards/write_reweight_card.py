@@ -1,6 +1,6 @@
 import argparse
 
-# python write_reweight_card.py out.dat cHbox,cHDD,ceHRe,ceHIm,chl3,cHW,cHB,cHWB,cHWtil,cHBtil,cHWBtil
+# python write_reweight_card.py out.dat cHbox,cHDD,chl3,cHW,cHB,cHWB,cHWtil,cHBtil,cHWBtil
 def main(args):
     fname = args.filename
     coeffs = args.coefficients.split(",")

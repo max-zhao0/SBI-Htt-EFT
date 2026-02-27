@@ -18,6 +18,35 @@ def flatten_with_weights(event_data, weights):
     assert len(flat_data) == len(relevant_weights)
     return flat_data, relevant_weights
 
+def plot_unweighted(data : dict[str, ak.Array], axis_label : str, outpath : str, bounds, nbins : int = 50, density=True):
+    histograms = {}
+    for ds in data:
+        h_phicp = hist.Hist.new.Reg(
+            nbins, *bounds, name="var", label=ds
+        ).Double()
+        h_phicp.fill(var=data[ds])
+        histograms[ds] = h_phicp
+
+    fig, ax = plt.subplots()
+    for ids, ds in enumerate(histograms):
+        hep.histplot(
+            histograms[ds],
+            histtype="step",
+            ax=ax,
+            label=ds,
+            color="C{}".format(ids),
+            density=density,
+        )
+
+    ax.set_xlabel(axis_label)
+    ax.set_ylabel("Events Normalized" if density else "Events")
+
+    hep.cms.label(ax=ax, label="Internal", data=True, year=2024, com=13.6)
+    ax.legend()
+
+    plt.savefig(outpath)
+    plt.close(fig)
+
 def plot_phicp(data : dict[str, tuple], axis_label : str, outpath : str, nbins : int = 10):
     histograms = {}
     for ds in data:
@@ -42,7 +71,7 @@ def plot_phicp(data : dict[str, tuple], axis_label : str, outpath : str, nbins :
     ax.set_xlabel(axis_label)
     ax.set_ylabel("Events Normalized")
 
-    hep.cms.label(ax=ax, label="Internal", data=True, year=2023, com=13.6)
+    hep.cms.label(ax=ax, label="Internal", data=True, year=2024, com=13.6)
     ax.legend()
 
     plt.savefig(outpath)
@@ -99,7 +128,7 @@ def plot_phicp_weight_cutoff(phicp, weights, axis_label, cutoff, outpath):
     ax.set_xlabel(axis_label)
     ax.set_ylabel("Events Normalized")
 
-    hep.cms.label(ax=ax, label="Internal", data=True, year=2023, com=13.6)
+    hep.cms.label(ax=ax, label="Internal", data=True, year=2024, com=13.6)
     ax.legend()
 
     plt.savefig(outpath)
@@ -133,7 +162,7 @@ def plot_lhetau_spin_ratio(spinid, weights, weight_values, axis_label, outpath="
     plt.close(fig)
 
 def main(args):
-    inpath = "/eos/user/z/zhaom/htautau/samples/SBI-Htt-EFT/python/data/eft_tauspinner_ntuples.root"
+    inpath = "/eos/user/z/zhaom/htautau/SBI-Htt-EFT/python/data/ntuples_big.root"
 
     with uproot.open(inpath) as fin:
         if False:
@@ -174,16 +203,34 @@ def main(args):
             )
 
         if True:
-            plot_phicp(
-                {"SM reweight" : flatten_with_weights(
-                    fin["Events;1"]["GenDressedElectronGenVisTauAngles_phicp"].array(),
-                    fin["Events;1"]["LHEWeight_cHbox_0p0_cHDD_0p0_ceHRe_0p0_ceHIm_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0"].array()
+            labels = [
+                ("GenDressedElectronGenVisTauAngles", r"$e\tau$", "etau"),
+                ("GenDressedMuGenVisTauAngles", r"$\mu\tau$", "mutau"),
+                ("GenVisTauGenVisTauAngles", r"$\tau\tau$", "tautau"),
+            ]
+            for branch_name, axis, prefix in labels:
+                plot_phicp(
+                    {
+                        r"$\theta$" + " = {}".format(theta) : flatten_with_weights(
+                            fin["Events;1"][branch_name + "_phicp"].array(),
+                            fin["Events;1"]["TauSpinner_weight_cp_{}".format(theta.replace(".", "p"))].array()
+                        ) for theta in ["0", "0.25","0.5"]
+                    },
+                    axis_label=axis + r" $\phi_{CP}$",
+                    outpath=prefix + "_phicp.png"
                 )
-                "theta = 0.5" : flatten_with_weights(
-                    ...
-                )},
-                axis_label=r"$e\tau$ $\phi_{CP}$",
-                outpath="etau_phicp.png"
+
+        if True:
+            labels = {
+                ("TauSpinner_weight_cp_" + theta.replace(".", "p"), r"$\theta = $" + theta) for theta in ["0", "0.5"]
+            }
+            plot_unweighted(
+                {
+                    axis : fin["Events;1"][branch].array() for branch, axis in labels
+                },
+                axis_label="Event weights",
+                outpath="TauSpinner_weights.png",
+                bounds=(0.1, 2.1)
             )
 
     return 0
