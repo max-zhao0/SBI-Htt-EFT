@@ -5,6 +5,12 @@ __pycache__/
 
 # C extensions
 *.so
+*.txt
+*.json
+*.png
+*.py.swp
+*.lhe
+*.tar.gz
 
 # projects directories
 genproductions_scripts
@@ -17,13 +23,7 @@ python/data
 python/tmp
 test_quadratic
 
-*.txt
 *.venv*
 mg_cache
 genproductions*
-*.tar.gz
 .vscode
-*.json
-*.png
-*.py.swp
-*.lhe
