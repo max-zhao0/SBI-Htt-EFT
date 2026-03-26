@@ -30,7 +30,7 @@
 # If you want to run Pythia, avoid more than 50k events in a run.    *
 #*********************************************************************
   1000 = nevents ! Number of unweighted events requested 
-      0       = iseed   ! rnd seed (0=assigned automatically=default))
+      0       = iseed   ! rnd seed (0=assigned automatically=default)
 #*********************************************************************
 # Collider type and energy                                           *
 # lpp: 0=No PDF, 1=proton, -1=antiproton, 2=photon from proton,      *
@@ -102,7 +102,7 @@ $DEFAULT_PDF_MEMBERS = reweight_PDF     ! if pdlabel=lhapdf, this is the lhapdf 
 #*********************************************************************
 # Minimum and maximum pt's (for max, -1 means no cut)                *
 #*********************************************************************
-  20 = ptj       ! minimum pt for the jets 
+  0.01 = ptj       ! minimum pt for the jets 
   0  = ptb       ! minimum pt for the b 
   0  = pta       ! minimum pt for the photons 
   0  = ptl       ! minimum pt for the charged leptons 
@@ -167,7 +167,7 @@ $DEFAULT_PDF_MEMBERS = reweight_PDF     ! if pdlabel=lhapdf, this is the lhapdf 
  0   = mmjj    ! min invariant mass of a jet pair 
  0   = mmbb    ! min invariant mass of a b pair 
  0   = mmaa    ! min invariant mass of gamma gamma pair
- 0   = mmll    ! min invariant mass of l+l- (same flavour) lepton pair
+ 30   = mmll    ! min invariant mass of l+l- (same flavour) lepton pair
  -1  = mmjjmax ! max invariant mass of a jet pair
  -1  = mmbbmax ! max invariant mass of a b pair
  -1  = mmaamax ! max invariant mass of gamma gamma pair
@@ -253,7 +253,7 @@ $DEFAULT_PDF_MEMBERS = reweight_PDF     ! if pdlabel=lhapdf, this is the lhapdf 
 #*********************************************************************
 # Jet measure cuts                                                   *
 #*********************************************************************
- 10  = xqcut   ! minimum kt jet measure between partons
+# 10  = xqcut   ! minimum kt jet measure between partons
 #*********************************************************************
 #
 #*********************************************************************

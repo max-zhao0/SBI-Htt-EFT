@@ -125,9 +125,17 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
         parameterSets = cms.vstring(
             'pythia8CommonSettings',
             'pythia8CP5Settings',
+            'pythia8PSweightsSettings',
+            'pythia8aMCatNLOSettings',
             'processParameters'
         ),
-        processParameters = cms.vstring('JetMatching:merge = off'),
+        processParameters = cms.vstring(
+            'TimeShower:nPartonsInBorn = 2',
+            'SLHA:useDecayTable = off',
+            '25:m0 = 125.0',
+            '25:onMode = off',
+            '25:onIfMatch = 15 -15'
+        ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
             'Tune:ee 7',
@@ -160,6 +168,30 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'ParticleDecays:limitTau0 = on',
             'ParticleDecays:tau0Max = 10',
             'ParticleDecays:allowPhotonRadiation = on'
+        ),
+        pythia8PSweightsSettings = cms.vstring(
+            'UncertaintyBands:doVariations = on',
+            'UncertaintyBands:List = {isrRedHi isr:muRfac=0.707,fsrRedHi fsr:muRfac=0.707,isrRedLo isr:muRfac=1.414,fsrRedLo fsr:muRfac=1.414,isrDefHi isr:muRfac=0.5,fsrDefHi fsr:muRfac=0.5,isrDefLo isr:muRfac=2.0,fsrDefLo fsr:muRfac=2.0,isrConHi isr:muRfac=0.25,fsrConHi fsr:muRfac=0.25,isrConLo isr:muRfac=4.0,fsrConLo fsr:muRfac=4.0,fsr_G2GG_muR_dn fsr:G2GG:muRfac=0.5,fsr_G2GG_muR_up fsr:G2GG:muRfac=2.0,fsr_G2QQ_muR_dn fsr:G2QQ:muRfac=0.5,fsr_G2QQ_muR_up fsr:G2QQ:muRfac=2.0,fsr_Q2QG_muR_dn fsr:Q2QG:muRfac=0.5,fsr_Q2QG_muR_up fsr:Q2QG:muRfac=2.0,fsr_X2XG_muR_dn fsr:X2XG:muRfac=0.5,fsr_X2XG_muR_up fsr:X2XG:muRfac=2.0,fsr_G2GG_cNS_dn fsr:G2GG:cNS=-2.0,fsr_G2GG_cNS_up fsr:G2GG:cNS=2.0,fsr_G2QQ_cNS_dn fsr:G2QQ:cNS=-2.0,fsr_G2QQ_cNS_up fsr:G2QQ:cNS=2.0,fsr_Q2QG_cNS_dn fsr:Q2QG:cNS=-2.0,fsr_Q2QG_cNS_up fsr:Q2QG:cNS=2.0,fsr_X2XG_cNS_dn fsr:X2XG:cNS=-2.0,fsr_X2XG_cNS_up fsr:X2XG:cNS=2.0,isr_G2GG_muR_dn isr:G2GG:muRfac=0.5,isr_G2GG_muR_up isr:G2GG:muRfac=2.0,isr_G2QQ_muR_dn isr:G2QQ:muRfac=0.5,isr_G2QQ_muR_up isr:G2QQ:muRfac=2.0,isr_Q2QG_muR_dn isr:Q2QG:muRfac=0.5,isr_Q2QG_muR_up isr:Q2QG:muRfac=2.0,isr_X2XG_muR_dn isr:X2XG:muRfac=0.5,isr_X2XG_muR_up isr:X2XG:muRfac=2.0,isr_G2GG_cNS_dn isr:G2GG:cNS=-2.0,isr_G2GG_cNS_up isr:G2GG:cNS=2.0,isr_G2QQ_cNS_dn isr:G2QQ:cNS=-2.0,isr_G2QQ_cNS_up isr:G2QQ:cNS=2.0,isr_Q2QG_cNS_dn isr:Q2QG:cNS=-2.0,isr_Q2QG_cNS_up isr:Q2QG:cNS=2.0,isr_X2XG_cNS_dn isr:X2XG:cNS=-2.0,isr_X2XG_cNS_up isr:X2XG:cNS=2.0}',
+            'UncertaintyBands:nFlavQ = 4',
+            'UncertaintyBands:MPIshowers = on',
+            'UncertaintyBands:overSampleFSR = 10.0',
+            'UncertaintyBands:overSampleISR = 10.0',
+            'UncertaintyBands:FSRpTmin2Fac = 20',
+            'UncertaintyBands:ISRpTmin2Fac = 20'
+        ),
+        pythia8aMCatNLOSettings = cms.vstring(
+            'SpaceShower:pTmaxMatch = 1',
+            'SpaceShower:pTmaxFudge = 1',
+            'SpaceShower:MEcorrections = off',
+            'TimeShower:pTmaxMatch = 1',
+            'TimeShower:pTmaxFudge = 1',
+            'TimeShower:MEcorrections = off',
+            'TimeShower:globalRecoil = on',
+            'TimeShower:limitPTmaxGlobal = on',
+            'TimeShower:nMaxGlobalRecoil = 1',
+            'TimeShower:globalRecoilMode = 2',
+            'TimeShower:nMaxGlobalBranch = 1',
+            'TimeShower:weightGluonToQuark = 1'
         )
     ),
     UseExternalGenerators = cms.untracked.bool(True),
@@ -172,7 +204,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_prodonly_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_np0_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),

@@ -323,11 +323,11 @@ def main(args):
         }
     }
 
-    extract_gen_taus = lambda ev: ev.GenPart[(abs(ev.GenPart.pdgId) == 15) & (ev.GenPart.hasFlags(['isPrompt', 'isLastCopy']))]
+    extract_gen_taus = lambda ev: ev.GenPart[(abs(ev.GenPart.pdgId) == 15) & (ev.GenPart.hasFlags(['isPrompt', 'isLastCopy']))] # & (ak.sum((abs(ev.GenJet.partonFlavour) == 21) | ((1 <= abs(ev.GenJet.partonFlavour)) & (abs(ev.GenJet.partonFlavour <= 4))), axis=1) == 2)
     extract_dressed_elec = lambda ev: ev.GenDressedLepton[ev.GenDressedLepton.hasTauAnc & (abs(ev.GenDressedLepton.pdgId) == 11)]
     extract_dressed_mu = lambda ev: ev.GenDressedLepton[ev.GenDressedLepton.hasTauAnc & (abs(ev.GenDressedLepton.pdgId) == 13)]
     extract_tauh = lambda ev: ev.GenVisTau
-    extract_gen_jets = lambda ev: ev.GenJet
+    extract_gen_jets = lambda ev: ev.GenJet[(1 <= abs(ev.GenJet.partonFlavour)) & (abs(ev.GenJet.partonFlavour <= 4))]
     extract_lhetaus = lambda ev: ev.LHEPart[abs(ev.LHEPart.pdgId) == 15]
     # extract_reweights = {rw_name : (lambda ev, name=rw_name: getattr(ev.LHEWeight, name)) for rw_name in reweight_names}
 
@@ -413,9 +413,10 @@ def main(args):
     return 0
 
 if __name__ == "__main__":
-    # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_v1/0000/ data/eft_unpolarized.root
+    # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_np0/0000/ data/np0_unpolarized.root
+    # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_v2/0000/ data/eft_unpolarized.root
     # python ntuplize_nanogen.py data/eft_tauspinner_nanogen.root data/eft_tauspinner_ntuples.root
-    # python ntuplize_nanogen.py /data/nanoaodsim_mid.root /data/ntuples_mid.root
+    # python ntuplize_nanogen.py data/central_VBF.root data/central_VBF_ntuples.root
     parser = argparse.ArgumentParser()
     parser.add_argument("inpath")
     parser.add_argument("outfile")
