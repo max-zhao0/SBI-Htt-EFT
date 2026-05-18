@@ -26,7 +26,7 @@ class SingleObjectProcessor(processor.ProcessorABC):
 
     def process(self, events):
         candidates = self.extract(events)
-        candidates = candidates[:,:2] # At most 2 of each candidate
+        # candidates = candidates[:,:2] # At most 2 of each candidate
 
         return {
             self.name : {
@@ -329,6 +329,8 @@ def main(args):
     extract_tauh = lambda ev: ev.GenVisTau
     extract_gen_jets = lambda ev: ev.GenJet[(1 <= abs(ev.GenJet.partonFlavour)) & (abs(ev.GenJet.partonFlavour <= 4))]
     extract_lhetaus = lambda ev: ev.LHEPart[abs(ev.LHEPart.pdgId) == 15]
+    extract_vbf_quarks = lambda ev: ev.LHEPart[(1 <= abs(ev.LHEPart.pdgId)) & (abs(ev.LHEPart.pdgId <= 4)) & (ev.LHEPart.status == 1)] # [ak.num(extract_gen_jets(ev)) <= 1]
+    extract_lhe_gluons = lambda ev: ev.LHEPart[(abs(ev.LHEPart.pdgId) == 21) & (ev.LHEPart.status == 1)]
     # extract_reweights = {rw_name : (lambda ev, name=rw_name: getattr(ev.LHEWeight, name)) for rw_name in reweight_names}
 
     runner = processor.Runner(
@@ -345,6 +347,8 @@ def main(args):
         dressed_mu_processor = SingleObjectProcessor(extract_dressed_mu, candidate_name="GenDressedMu")
         tauh_processor = SingleObjectProcessor(extract_tauh, candidate_name="GenVisTau")
         gen_jet_processor = SingleObjectProcessor(extract_gen_jets, candidate_name="GenJet")
+        vbf_quark_processor = SingleObjectProcessor(extract_vbf_quarks, candidate_name="LHELightQuark")
+        lhe_gluon_processor = SingleObjectProcessor(extract_lhe_gluons, candidate_name="LHEGluon")
 
         processors_to_run += [
             gen_tau_processor,
@@ -352,6 +356,8 @@ def main(args):
             dressed_mu_processor,
             tauh_processor,
             gen_jet_processor,
+            vbf_quark_processor,
+            lhe_gluon_processor
         ]
 
     if "diobject" in categories:
@@ -360,6 +366,7 @@ def main(args):
         etau_processor = DiobjectProcessor(extract_dressed_elec, "GenDressedElectron", extract_tauh, "GenVisTau")
         tautau_processor = DiobjectProcessor(extract_tauh, "GenVisTau")
         dijet_processor = DiobjectProcessor(extract_gen_jets, "GenJet")
+        divbfq_processor = DiobjectProcessor(extract_vbf_quarks, "LHELightQuark")
 
         processors_to_run += [
             gengen_processor,
@@ -367,6 +374,7 @@ def main(args):
             etau_processor,
             tautau_processor,
             dijet_processor,
+            divbfq_processor
         ]
 
     if "phicp" in categories:
@@ -408,7 +416,7 @@ def main(args):
                 ntuples["{}_{}".format(obj_name, attr_name)] = outdata[obj_name][attr_name].value
 
     with uproot.recreate(outpath) as fout:
-        fout["Events"] = ntuples
+        fout.mktree("Events", ntuples) # ["Events"] = ntuples
 
     return 0
 
@@ -416,7 +424,9 @@ if __name__ == "__main__":
     # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_np0/0000/ data/np0_unpolarized.root
     # python ntuplize_nanogen.py /eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/nanoaodsim_v2/0000/ data/eft_unpolarized.root
     # python ntuplize_nanogen.py data/eft_tauspinner_nanogen.root data/eft_tauspinner_ntuples.root
+    # python ntuplize_nanogen.py data/central_hmm.root data/central_hmm_ntuples.root -c single,diobject,lhetau,weight
     # python ntuplize_nanogen.py data/central_VBF.root data/central_VBF_ntuples.root
+
     parser = argparse.ArgumentParser()
     parser.add_argument("inpath")
     parser.add_argument("outfile")

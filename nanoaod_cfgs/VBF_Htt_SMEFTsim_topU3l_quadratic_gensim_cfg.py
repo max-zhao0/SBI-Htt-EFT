@@ -25,11 +25,6 @@ process.load('Configuration.StandardSequences.SimIdeal_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(5000),
-    output = cms.untracked.int32(5000)
-)
-
 # Input source
 process.source = cms.Source("EmptySource")
 
@@ -204,7 +199,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_np0_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_prodonly_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
