@@ -1,0 +1,786 @@
+change rwgt_dir rwgt
+change helicity True
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_1p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 -1.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW -1.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB -1.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB -1.0
+set cHWtil 0.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_m1p0_cHWBtil_0p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil -1.0
+set cHWBtil 0.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 1.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil -1.0
+set cHBtil 0.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil 1.0
+set cHWBtil -1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil 1.0
+launch --rwgt_name=chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_m1p0
+set chl3 0.0
+set cHW 0.0
+set cHB 0.0
+set cHWB 0.0
+set cHWtil 0.0
+set cHBtil -1.0
+set cHWBtil -1.0

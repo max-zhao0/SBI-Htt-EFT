@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_prodonly_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBFHtt_SMEFTsim_topU3l_quadratic_npprop0_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
