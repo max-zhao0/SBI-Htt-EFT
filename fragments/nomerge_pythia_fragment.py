@@ -1,17 +1,21 @@
 import FWCore.ParameterSet.Config as cms
 
 externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/eos/user/z/zhaom/htautau/samples/SBI-Htt-EFT/genproductions_scripts/bin/MadGraph5_aMCatNLO/ppH_Htt_SMEFTsim_topU3l_quadratic_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBFHtt_SMEFTsim_topU3l_quadratic_npprop0_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
     nEvents = cms.untracked.uint32(5000),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
-    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh')
+    scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh')
 )
 
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
+from Configuration.Generator.PSweightsPythia.PythiaPSweightsSettings_cfi import *
+from Configuration.Generator.Pythia8aMCatNLOSettings_cfi import *
+from GeneratorInterface.ExternalDecays.TauolaSettings_cff import *
 
 generator = cms.EDFilter("Pythia8HadronizerFilter",
+    UseExternalGenerators = cms.untracked.bool(True),
     maxEventsToPrint = cms.untracked.int32(1),
     pythiaPylistVerbosity = cms.untracked.int32(1),
     filterEfficiency = cms.untracked.double(1.0),
@@ -20,13 +24,21 @@ generator = cms.EDFilter("Pythia8HadronizerFilter",
     PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
         pythia8CP5SettingsBlock,
+        pythia8PSweightsSettingsBlock,
+        pythia8aMCatNLOSettingsBlock,
         processParameters = cms.vstring(
-            'JetMatching:merge = off',
+            'TimeShower:nPartonsInBorn = 2',
+            'SLHA:useDecayTable = off',
+            '25:m0 = 125.0',
+            '25:onMode = off',
+            '25:onIfMatch = 15 -15',
+            'TauDecays:mode = 3'
         ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',
+                                    'pythia8PSweightsSettings',
+                                    'pythia8aMCatNLOSettings',
                                     'processParameters',
                                     )
     )
 )
-

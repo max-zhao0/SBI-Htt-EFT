@@ -16,9 +16,9 @@ config.JobType.numCores = 8
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2
 # NJOBS = 5 # This is not a configuration parameter, but an auxiliary variable that we use in the next line.
-config.Data.totalUnits = 999 # config.Data.unitsPerJob * NJOBS
+config.Data.totalUnits = 1000 # config.Data.unitsPerJob * NJOBS
 config.Data.userInputFiles = [
-    "root://cmseos.fnal.gov//store/group/lpchiggssbi/signal/VBFHtoTauTau/140X_mcRun3_2024_realistic_v26/gensimraw/0000/gensimraw_{}.root".format(i) for i in range(1, config.Data.totalUnits + 1)
+    "root://cmseos.fnal.gov//store/group/lpchiggssbi/signal/VBFHtoTauTau/140X_mcRun3_2024_realistic_v26/gensimraw_v2/0000/gensimraw_{}.root".format(i) for i in range(1, config.Data.totalUnits + 1)
 ]
 config.Data.publication = False
 config.Data.outputPrimaryDataset = 'VBFHtoTauTau'

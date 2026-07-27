@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: Configuration/Generator/python/nomerge_tauola_fragment.py --era Run3_2024 --customise Configuration/DataProcessing/Utils.addMonitoring --beamspot DBrealistic --step LHE,GEN,SIM --geometry DB:Extended --conditions 140X_mcRun3_2024_realistic_v26 --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=12345\nprocess.source.numberEventsInLuminosityBlock=cms.untracked.uint32(1000) --datatier GEN-SIM,LHE --eventcontent RAWSIM,LHE --python_filename VBF_Htt_SMEFTsim_topU3l_quadratic_gensim_cfg.py --nThreads 8 --fileout file:gensim.root --number 5000 --number_out 5000 --no_exec --mc
+# with command line options: Configuration/Generator/python/nomerge_pythia_fragment.py --era Run3_2024 --customise Configuration/DataProcessing/Utils.addMonitoring --beamspot DBrealistic --step LHE,GEN,SIM --geometry DB:Extended --conditions 140X_mcRun3_2024_realistic_v26 --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=12345\nprocess.source.numberEventsInLuminosityBlock=cms.untracked.uint32(1000) --datatier GEN-SIM,LHE --eventcontent RAWSIM,LHE --python_filename VBF_Htt_SMEFTsim_topU3l_quadratic_gensim_cfg.py --nThreads 8 --fileout file:gensim.root --number 200 --number_out 200 --no_exec --mc
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
@@ -62,7 +62,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('Configuration/Generator/python/nomerge_tauola_fragment.py nevts:5000'),
+    annotation = cms.untracked.string('Configuration/Generator/python/nomerge_pythia_fragment.py nevts:200'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -105,17 +105,6 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '140X_mcRun3_2024_realistic_v26', '')
 
 process.generator = cms.EDFilter("Pythia8HadronizerFilter",
-    ExternalDecays = cms.PSet(
-        Tauola = cms.untracked.PSet(
-            InputCards = cms.PSet(
-                mdtau = cms.int32(0),
-                pjak1 = cms.int32(0),
-                pjak2 = cms.int32(0)
-            ),
-            UseTauolaPolarization = cms.bool(False)
-        ),
-        parameterSets = cms.vstring('Tauola')
-    ),
     PythiaParameters = cms.PSet(
         parameterSets = cms.vstring(
             'pythia8CommonSettings',
@@ -129,7 +118,8 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             'SLHA:useDecayTable = off',
             '25:m0 = 125.0',
             '25:onMode = off',
-            '25:onIfMatch = 15 -15'
+            '25:onIfMatch = 15 -15',
+            'TauDecays:mode = 3'
         ),
         pythia8CP5Settings = cms.vstring(
             'Tune:pp 14',
@@ -199,8 +189,8 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
 
 
 process.externalLHEProducer = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBF_Htt_SMEFTsim_topU3l_quadratic_prodonly_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
-    nEvents = cms.untracked.uint32(5000),
+    args = cms.vstring('root://eosuser.cern.ch//eos/user/z/zhaom/www/htautau/gridpacks/VBFHtt_SMEFTsim_topU3l_quadratic_npprop0_el8_amd64_gcc10_CMSSW_12_4_8_tarball.tar.xz'),
+    nEvents = cms.untracked.uint32(200),
     numberOfParameters = cms.uint32(1),
     outputFile = cms.string('cmsgrid_final.lhe'),
     scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_xrootd.sh')

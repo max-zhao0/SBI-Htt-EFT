@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: --scenario pp --era Run3_2024 --customise Configuration/DataProcessing/Utils.addMonitoring --step NANO --conditions 150X_mcRun3_2024_realistic_v2 --datatier NANOAODSIM --eventcontent NANOAODSIM --python_filename VBF_Htt_SMEFTsim_topU3l_quadratic_nanoaodsim_cfg.py --filein file:miniaodsim.root --fileout file:nanoaodsim.root --number 200 --number_out 200 --no_exec --nThreads 8  --mc
+# with command line options: --scenario pp --era Run3_2024 --customise Configuration/DataProcessing/Utils.addMonitoring --step NANO --conditions 150X_mcRun3_2024_realistic_v2 --datatier NANOAODSIM --eventcontent NANOAODSIM --python_filename VBF_Htt_SMEFTsim_topU3l_quadratic_nanoaodsim_cfg.py --filein file:miniaodsim.root --fileout file:nanoaodsim.root --no_exec --nThreads 8  --mc
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_2024_cff import Run3_2024
@@ -21,20 +21,9 @@ process.load('PhysicsTools.NanoAOD.nano_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-#process.maxEvents = cms.untracked.PSet(
-#    input = cms.untracked.int32(5000),
-#    output = cms.untracked.int32(5000)
-#)
-
-#import os
-#root_dir = "/eos/user/z/zhaom/qqHtoTauTau/140X_mcRun3_2024_realistic_v26/miniaodsim_v0/0000/"
-#input_files = ["file:" + root_dir + fname for fname in os.listdir(root_dir) if fname.endswith(".root")]
-#print(input_files)
-
 # Input source
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('file:miniaodsim.root'),
-#    fileNames = cms.untracked.vstring(input_files),
     secondaryFileNames = cms.untracked.vstring()
 )
 
@@ -72,7 +61,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('--scenario nevts:200'),
+    annotation = cms.untracked.string('--scenario nevts:1'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -100,22 +89,6 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '150X_mcRun3_2024_realistic_v2'
 process.nanoAOD_step = cms.Path(process.nanoSequenceMC)
 process.endjob_step = cms.EndPath(process.endOfProcess)
 process.NANOAODSIMoutput_step = cms.EndPath(process.NANOAODSIMoutput)
-
-from PhysicsTools.PatAlgos.slimming.prunedGenParticles_cfi import prunedGenParticles
-process.tauSpinnerGenParticles = prunedGenParticles.clone(
-    src = "prunedGenParticles",
-    select = cms.vstring( # All recognized tau daughters
-        "drop *",
-        "keep abs(pdgId)==25",
-        "keep (11 <= abs(pdgId) <= 16)", # Leptons and neutrinos
-        "keep abs(pdgId)==22", # Photons
-        "keep abs(pdgId)==111 || abs(pdgId)==130 || abs(pdgId)==211 || abs(pdgId)==310 || abs(pdgId)==311 || abs(pdgId)==321", # Final Hadrons
-        "keep abs(pdgId)==221 || abs(pdgId)==223 || abs(pdgId)==323" # Intermediate hadrons
-    )
-)
-process.tauSpinnerGenParticles_task = cms.Task(process.tauSpinnerGenParticles)
-process.nanoSequenceMC.associate(process.tauSpinnerGenParticles_task)
-process.tauSpinnerTable.src = "tauSpinnerGenParticles"
 
 # Schedule definition
 process.schedule = cms.Schedule(process.nanoAOD_step,process.endjob_step,process.NANOAODSIMoutput_step)
@@ -145,177 +118,7 @@ process = nanoAOD_customizeCommon(process)
 
 # Customisation from command line
 
-process.source.delayReadingEventProducts = cms.untracked.bool(False)
-
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
 # End adding early deletion
-
-named_weights = [
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_1p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_m1p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_1p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_m1p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_m1p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_m1p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_m1p0_cHWB_0p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_m1p0_cHWtil_0p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_m1p0_cHWBtil_0p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_1p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_m1p0_cHBtil_0p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_1p0_cHWBtil_m1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_1p0",
-    "cHbox_0p0_cHDD_0p0_chl3_0p0_cHW_0p0_cHB_0p0_cHWB_0p0_cHWtil_0p0_cHBtil_m1p0_cHWBtil_m1p0",
-]
-process.genWeightsTable.namedWeightIDs = named_weights
-process.genWeightsTable.namedWeightLabels = named_weights

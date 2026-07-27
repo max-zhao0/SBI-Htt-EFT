@@ -18,7 +18,7 @@ config.Data.unitsPerJob = 5
 NJOBS = 50 # This is not a configuration parameter, but an auxiliary variable that we use in the next line.
 config.Data.totalUnits = config.Data.unitsPerJob * NJOBS
 config.Data.userInputFiles = [
-    "root://cmseos.fnal.gov//store/group/lpchiggssbi/signal/VBFHtoTauTau/140X_mcRun3_2024_realistic_v26/miniaodsim/0000/miniaodsim_{}.root".format(i) for i in range(1, config.Data.totalUnits + 1)
+    "root://cmseos.fnal.gov//store/group/lpchiggssbi/signal/VBFHtoTauTau/140X_mcRun3_2024_realistic_v26/miniaodsim_v2/0000/miniaodsim_{}.root".format(i) for i in range(1, config.Data.totalUnits + 1)
 ]
 config.Data.publication = False
 config.Data.outputPrimaryDataset = 'VBFHtoTauTau'
